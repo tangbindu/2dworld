@@ -4,40 +4,37 @@ import eventTarget from "./eventTarget.js";
 // 绘图 
 class Sprite extends eventTarget{
     //构造
-    constructor(pos) {
+    constructor(config) {
         super();
+        this.config=config || {};
         //类型，默认sprite
         this.type="default";
         //id
-        this.id=null;
+        this.id=this.id || "";
         //name
-        this.name="";
-        //类名
-        this.className=[];
-        //样式
-        this.style=null;
+        this.name=this.name || "";
         //x坐标
-        this.x = pos.x;
+        this.x = this.config.x || 0;
         //y坐标
-        this.y = pos.y;
-        //宽
-        this.width=0;
-        //高
-        this.height=0;
+        this.y = this.config.y || 0;
+        //width
+        this.width=this.config.width || 0;
+        //height
+        this.height=this.config.height || 0;
         //层级
-        this.index=100;
+        this.index=this.config.index || 100;
         //选中
-        this.active=false;
+        this.active=this.config.active || false;
         //缩放
-        this.scale=1.0;
+        this.scale=this.config.scale || 1.0;
         //位移
-        this.translate={x:0,y:0};
+        this.translate=this.config.translate || [0,0];
         //可见性
-        this.visible=true;
+        this.visible=this.config.visible || true;
         //zindex
-        this.zindex=0;
+        this.zindex=this.config.zindex || 0;
         //allowClick
-        this.allowClick=true;
+        this.allowClick=this.config.allowClick || false;
         //click event
     }
     /**
@@ -53,13 +50,6 @@ class Sprite extends eventTarget{
      * @param {ctx} ctx 
      */
     draw(ctx){
-        //是否可绘制'
-        if(!this.visible){
-            return;
-        }
-    }
-    toggleActive(){
-        this.active=!this.active;
     }
 }
 export default Sprite;
