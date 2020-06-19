@@ -27,12 +27,14 @@ class Sprite extends eventTarget{
         this.active=this.config.active || false;
         //缩放
         this.scale=this.config.scale || 1.0;
+        //旋转
+        this.rotate=this.config.rotate || 0.0;
         //位移
         this.translate=this.config.translate || [0,0];
         //zindex
         this.zindex=this.config.zindex || 0;
         //useDrag
-        this.useDrag=this.config.useDrag!=undefined? this.config.useDrag : true;
+        this.useDrag=this.config.useDrag || false;
         //allowClick
         this.allowClick=this.config.allowClick!=undefined? this.config.allowClick : true;
         //click event
@@ -46,10 +48,17 @@ class Sprite extends eventTarget{
         this.y+=vector[1];
     }
     /**
-     * 绘制
-     * @param {ctx} ctx 
+     * 移动到一个点
      */
-    draw(ctx){
+    moveTo(point){
+        this.x=point.x;
+        this.y=point.y;
+    }
+    /**
+     * 旋转
+     */
+    rotate(deg){
+        this.rotate=deg;
     }
 }
 export default Sprite;

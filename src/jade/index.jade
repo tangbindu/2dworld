@@ -13,3 +13,9 @@ html(data-use-rem)
   body(ontouchstart="")
     #stageContainer
     script(src="../js/index.js" type="module")
+    script. 
+      document.body.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+      }, {
+        passive: false
+      });

@@ -40,32 +40,16 @@ class Stage extends eventTarget{
     initTouchEvent(view){
         this.touchEvent=new TouchEvent(view);
         this.touchEvent.handler("mixTouchEvent",()=>{
-            if(this.touchEvent.eventType=="mousedown"){
+            if(this.touchEvent.eventType=="touchstart"){
                 //选择精灵
-                // console.log("选择精灵")
                 this.touchSprite(this.touchEvent.currentPos);
-            }else if(this.touchEvent.eventType=="mousemove"){
+            }else if(this.touchEvent.eventType=="touchmove"){
                 //drag精灵
-                this.activeSprite && this.dragActiveSprite(this.activeSprite,this.touchEvent.moveVector)
-            }else if(this.touchEvent.eventType=="mouseup"){
+                this.activeSprite && this.dragActiveSprite(this.activeSprite,this.touchEvent.moveVector);
+            }else if(this.touchEvent.eventType=="touchend"){
                 //释放精灵
-                // console.log("释放精灵")
                 this.releaseSprite();
             }
-        })
-    }
-    /**
-     * 渲染舞台内容
-     */
-    render(){
-        //清空画布
-        this.ctx.clearRect( 0, 0, this.width, this.height);
-        //排序
-        this.renderContentList.sort((a,b)=>{
-            return a.zindex-b.zindex;
-        })
-        this.renderContentList.forEach(sprite=>{
-            sprite.draw(this.ctx);
         })
     }
     /**
@@ -75,9 +59,21 @@ class Stage extends eventTarget{
         this.renderContentList.forEach(item=>{
             if(item.isInPath(this.ctx,pos) && item.allowClick){
                 this.activeSprite=item;
+                this.activeSprite.trigger("touchstart")
+                this.render();
             }
         })
-        this.activeSprite.trigger("mousedown")
+    }
+    /**
+     * drag精灵
+     */
+    dragActiveSprite(activeSprite,moveVector){
+        if(activeSprite.useDrag){
+            activeSprite.x+=moveVector[0]
+            activeSprite.y+=moveVector[1]
+            this.activeSprite.trigger("dragging")
+            this.render();
+        }
     }
     /**
      * 释放精灵
@@ -129,17 +125,18 @@ class Stage extends eventTarget{
         })
     }
     /**
-     * drag精灵
+     * 渲染舞台内容
      */
-    dragActiveSprite(activeSprite,moveVector){
-        if(activeSprite.useDrag){
-            activeSprite.x+=moveVector[0]
-            activeSprite.y+=moveVector[1]
-            this.render();
-        }
+    render(){
+        //清空画布
+        this.ctx.clearRect( 0, 0, this.width, this.height);
+        //排序
+        this.renderContentList.sort((a,b)=>{
+            return a.zindex-b.zindex;
+        })
+        this.renderContentList.forEach(sprite=>{
+            sprite.draw(this.ctx);
+        })
     }
 };
 export default Stage;
-
-
-// var pat=ctx.createPattern(img,"repeat");

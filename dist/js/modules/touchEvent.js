@@ -27,17 +27,17 @@ class TouchEvent extends eventTarget{
      */
     init(){
         //常规鼠标事件
-        this.element.addEventListener("mousedown",(event)=>{
-            this.eventType="mousedown";
-            this.mousedown(event)
+        this.element.addEventListener("touchstart",(event)=>{
+            this.eventType="touchstart";
+            this.touchstart(event)
         })
-        this.element.addEventListener("mousemove",(event)=>{
-            this.eventType="mousemove"
-            this.mousemove(event)
+        this.element.addEventListener("touchmove",(event)=>{
+            this.eventType="touchmove"
+            this.touchmove(event)
         })
-        this.element.addEventListener("mouseup",(event)=>{
-            this.eventType="mouseup"
-            this.mouseup(event);
+        this.element.addEventListener("touchend",(event)=>{
+            this.eventType="touchend"
+            this.touchend(event);
         })
     }
     /**
@@ -50,34 +50,34 @@ class TouchEvent extends eventTarget{
         }
     }
     /**
-     * mousedown
+     * touchstart
      */
-    mousedown(event){
-        this.currentPos={x:event.clientX,y:event.clientY};
+    touchstart(event){
+        this.currentPos={x:event.touches[0].clientX,y:event.touches[0].clientY};
         this.currentPos=this.toCanvasPixel(this.currentPos);
         this.startPos=this.currentPos;
         this.previousPos = this.currentPos;
-        this.trigger("mousedown");
-        this.detailMixEvent("mousedown");
+        this.trigger("touchstart");
+        this.detailMixEvent("touchstart");
     }
     /**
-     * mousemove
+     * touchmove
      */
-    mousemove(event){
-        this.currentPos={x:event.clientX,y:event.clientY};
+    touchmove(event){
+        this.currentPos={x:event.touches[0].clientX,y:event.touches[0].clientY};
         this.currentPos=this.toCanvasPixel(this.currentPos);
-        this.trigger("mousemove");
-        this.detailMixEvent("mousemove");
+        this.trigger("touchmove");
+        this.detailMixEvent("touchmove");
         this.previousPos=this.currentPos;
     }
     /**
-     * mouseup
+     * touchend
      */
-    mouseup(event){
-        this.currentPos={x:event.clientX,y:event.clientY};
-        this.currentPos=this.toCanvasPixel(this.currentPos);
-        this.trigger("mouseup");
-        this.detailMixEvent("mouseup");
+    touchend(event){
+        // this.currentPos={x:event.touches[0].clientX,y:event.touches[0].clientY};
+        // this.currentPos=this.toCanvasPixel(this.currentPos);
+        this.trigger("touchend");
+        this.detailMixEvent("touchend");
         this.startPos=null;
         this.previousPos=null;
         this.currentPos=null;
@@ -87,14 +87,14 @@ class TouchEvent extends eventTarget{
      * 处理混合情况
      */
     detailMixEvent(type){
-        if(type=="mousedown"){
+        if(type=="touchstart"){
             this.isMoving=true;
-        }else if(type=="mousemove" && this.isMoving){
+        }else if(type=="touchmove" && this.isMoving){
             this.moveVector=[
                 this.currentPos.x-this.previousPos.x,
                 this.currentPos.y-this.previousPos.y
             ];
-        }else if( type=="mouseup"){
+        }else if( type=="touchend"){
             this.totalMoveVector=[
                 this.currentPos.x-this.startPos.x,
                 this.currentPos.y-this.startPos.y

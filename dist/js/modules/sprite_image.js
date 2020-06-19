@@ -7,6 +7,7 @@ class ImageSprite extends Sprite{
         this.imagePath=imagePath || "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
         this.config=config || {};
         this.img=null;
+        this.name = this.config.name || imagePath || "";
         this.repeat=this.config.repeat || false;
         this.init();
     }
@@ -15,6 +16,8 @@ class ImageSprite extends Sprite{
         let img=new Image();
         img.onload=()=>{
             this.img=img;
+            this.width=this.config.width || img.width;
+            this.height=this.config.height || img.height;
             this.trigger("imgLoaded");
         }
         img.src=this.imagePath;

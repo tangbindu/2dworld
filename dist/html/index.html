@@ -14,5 +14,12 @@
   <body ontouchstart="">
     <div id="stageContainer"></div>
     <script src="../js/index.js" type="module"></script>
+    <script>
+      document.body.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+      }, {
+        passive: false
+      });
+    </script>
   </body>
 </html>
