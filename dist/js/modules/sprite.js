@@ -8,11 +8,11 @@ class Sprite extends eventTarget{
         super();
         this.config=config || {};
         //类型，默认sprite
-        this.type="default";
+        this.type=this.config || "default";
         //id
-        this.id=this.id || "";
+        this.id=this.config.id || "";
         //name
-        this.name=this.name || "";
+        this.name=this.config.name || "";
         //x坐标
         this.x = this.config.x || 0;
         //y坐标
@@ -29,12 +29,12 @@ class Sprite extends eventTarget{
         this.scale=this.config.scale || 1.0;
         //位移
         this.translate=this.config.translate || [0,0];
-        //可见性
-        this.visible=this.config.visible || true;
         //zindex
         this.zindex=this.config.zindex || 0;
+        //useDrag
+        this.useDrag=this.config.useDrag!=undefined? this.config.useDrag : true;
         //allowClick
-        this.allowClick=this.config.allowClick || false;
+        this.allowClick=this.config.allowClick!=undefined? this.config.allowClick : true;
         //click event
     }
     /**

@@ -1,13 +1,27 @@
-class stage{
+import ImageSprite from "./sprite_image.js";
+import eventTarget from "./eventTarget.js";
+import TouchEvent from "./touchEvent.js";
+class Stage extends eventTarget{
     /**
-     * @param {node} container 
-     * @param {number} ratio 
+     * 构造
      */
-    constructor(container,ratio){
-        this.ratio=ratio;
-        this.container=container;
+    constructor(){
+        super();
+        //指canvas组件
         this.view=null;
+        //绘图上下文
         this.ctx=null;
+        //stage的width
+        this.width=400;
+        //stage的高
+        this.height=300;
+        //render内容列表
+        this.renderContentList=[];
+        //touch event
+        this.touchEvent=null;
+        //active sprite 
+        this.activeSprite=null;
+        //初始化舞台
         this.init();
     }
     /**
@@ -16,44 +30,116 @@ class stage{
     init(){
         this.view=document.createElement("canvas");
         this.ctx = this.view.getContext("2d");
-        document.getElementById("container").appendChild(this.view);
-        this.resize(this.container,this.ratio);
+        this.resize(this.width,this.height);
+        //initTouchEvent
+        this.initTouchEvent(this.view);
     }
     /**
-     * 缩放舞台
-     * @param {number} scale
-     * @param {object} app
+     * 初始化touchevent
      */
-    scale(scale,app){
-        //缩放后，逻辑像素不能变
-        let newScale=app.scale*scale;
-        if(newScale>app.scaleLimit || newScale<1/app.scaleLimit){
-            return;
-        }else{
-            app.scale=newScale;
-        }
-        //current LogicPos
-        app.mouseEvent.refresh();
-        let lastCurLogicPosX=app.mouseEvent.curLogicPos.x;
-        let lastCurLogicPosY=app.mouseEvent.curLogicPos.y;
-        //new LogicPos
-        app.mouseEvent.scale=newScale;
-        app.mouseEvent.refresh();
-        let newCurLogicPosX=app.mouseEvent.curLogicPos.x;
-        let newCurLogicPosY=app.mouseEvent.curLogicPos.y;
-        //新坐标
-        app.coordinateOrigin.x+=(newCurLogicPosX-lastCurLogicPosX);
-        app.coordinateOrigin.y+=(newCurLogicPosY-lastCurLogicPosY);
+    initTouchEvent(view){
+        this.touchEvent=new TouchEvent(view);
+        this.touchEvent.handler("mixTouchEvent",()=>{
+            if(this.touchEvent.eventType=="mousedown"){
+                //选择精灵
+                // console.log("选择精灵")
+                this.touchSprite(this.touchEvent.currentPos);
+            }else if(this.touchEvent.eventType=="mousemove"){
+                //drag精灵
+                this.activeSprite && this.dragActiveSprite(this.activeSprite,this.touchEvent.moveVector)
+            }else if(this.touchEvent.eventType=="mouseup"){
+                //释放精灵
+                // console.log("释放精灵")
+                this.releaseSprite();
+            }
+        })
+    }
+    /**
+     * 渲染舞台内容
+     */
+    render(){
+        //清空画布
+        this.ctx.clearRect( 0, 0, this.width, this.height);
+        //排序
+        this.renderContentList.sort((a,b)=>{
+            return a.zindex-b.zindex;
+        })
+        this.renderContentList.forEach(sprite=>{
+            sprite.draw(this.ctx);
+        })
+    }
+    /**
+     * 点击精灵
+     */
+    touchSprite(pos){
+        this.renderContentList.forEach(item=>{
+            if(item.isInPath(this.ctx,pos) && item.allowClick){
+                this.activeSprite=item;
+            }
+        })
+        this.activeSprite.trigger("mousedown")
+    }
+    /**
+     * 释放精灵
+     */
+    releaseSprite(){
+        this.activeSprite=null;
     }
     /**
      * 重置尺寸
      * @param {node} container 
      * @param {number} ratio 
      */
-    resize(container,ratio){
-        this.view.width=this.container.clientWidth*this.ratio;
-        this.view.height=this.container.clientHeight*this.ratio;
-        this.view.style.zoom=1/this.ratio;
+    resize(width,height){
+        this.width=width;
+        this.height=height;
+        this.view.width=this.width;
+        this.view.height=this.height;
+    }
+    /**
+     * 填充颜色
+     * @param {color} color 
+     */
+    setBackgroundColor(color){
+        this.ctx.fillStyle=color;
+        this.ctx.fillRect(0,0,this.width,this.height)
+    }
+    /**
+     * 添加图片精灵
+     */
+    addImageSprite(imagePath,config){
+        let imgSprite=new ImageSprite(imagePath,config);
+        this.renderContentList.push(imgSprite)
+        imgSprite.handler("imgLoaded",()=>{
+            this.trigger("addSprite");
+            this.render();
+        })
+        return imgSprite;
+    }
+    /**
+     * 移除精灵
+     */
+    removeSprite(sprite){
+        this.renderContentList.forEach((item,index)=>{
+            if(sprite==item){
+                this.renderContentList.splice(index,1);
+                this.trigger("removeSprite");
+                this.render();
+            }
+        })
+    }
+    /**
+     * drag精灵
+     */
+    dragActiveSprite(activeSprite,moveVector){
+        if(activeSprite.useDrag){
+            activeSprite.x+=moveVector[0]
+            activeSprite.y+=moveVector[1]
+            this.render();
+        }
     }
 };
-export default stage;
+export default Stage;
+
+
+// var pat=ctx.createPattern(img,"repeat");
