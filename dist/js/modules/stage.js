@@ -16,7 +16,7 @@ class Stage extends eventTarget{
         //stage的高
         this.height=300;
         //render内容列表
-        this.renderContentList=[];
+        this.spriteList=[];
         //touch event
         this.touchEvent=null;
         //active sprite 
@@ -56,7 +56,7 @@ class Stage extends eventTarget{
      * 点击精灵
      */
     touchSprite(pos){
-        this.renderContentList.forEach(item=>{
+        this.spriteList.forEach(item=>{
             if(item.isInPath(this.ctx,pos) && item.allowClick){
                 this.activeSprite=item;
                 this.activeSprite.trigger("touchstart")
@@ -105,7 +105,7 @@ class Stage extends eventTarget{
      */
     addImageSprite(imagePath,config){
         let imgSprite=new ImageSprite(imagePath,config);
-        this.renderContentList.push(imgSprite)
+        this.spriteList.push(imgSprite)
         imgSprite.handler("imgLoaded",()=>{
             this.trigger("addSprite");
             this.render();
@@ -116,12 +116,32 @@ class Stage extends eventTarget{
      * 移除精灵
      */
     removeSprite(sprite){
-        this.renderContentList.forEach((item,index)=>{
+        this.spriteList.forEach((item,index)=>{
             if(sprite==item){
-                this.renderContentList.splice(index,1);
+                this.spriteList.splice(index,1);
                 this.trigger("removeSprite");
                 this.render();
             }
+        })
+    }
+    /**
+     * 获取精灵byid
+     */
+    getSpriteById(id){
+        return this.spriteList.filter(item=>{
+            if(item.id==id){
+                return item
+            } 
+        })[0]
+    }
+    /**
+     * 获取精灵byname
+     */
+    getSpriteByName(name){
+        return this.spriteList.filter(item=>{
+            if(item.name==name){
+                return item
+            } 
         })
     }
     /**
@@ -131,10 +151,15 @@ class Stage extends eventTarget{
         //清空画布
         this.ctx.clearRect( 0, 0, this.width, this.height);
         //排序
-        this.renderContentList.sort((a,b)=>{
+        this.spriteList.sort((a,b)=>{
             return a.zindex-b.zindex;
         })
-        this.renderContentList.forEach(sprite=>{
+        //绘制
+        this.spriteList.forEach(sprite=>{
+            //计算定位
+            sprite.calculateRelativePosition();
+            //计算旋转
+            sprite.calculateRelativeRotate();
             sprite.draw(this.ctx);
         })
     }

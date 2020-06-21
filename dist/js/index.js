@@ -32,6 +32,7 @@ let images=[
     "ill9",
     "ill10",
     "ill11",
+    "pattern2"
 ]
 images.forEach(image=>{
     let imgSprite=stage.addImageSprite("../imgs/illustration/"+image+".png",{
@@ -88,18 +89,22 @@ let controlSprite={
     //nie
     attach(sprite){
         this.attachSprite=sprite;
-        let rtPoint={
-            x: sprite.x+sprite.width-this.draw_delete_btn.width*.5,
-            y: sprite.y-this.draw_delete_btn.height*.5
-        }
-        let lbPoint={
-            x: sprite.x-this.draw_control_btn.width*.5,
-            y: sprite.y+sprite.height-this.draw_control_btn.height*.5
-        }
-        //移动到左下方
-        this.draw_control_btn.moveTo(lbPoint)
-        //移动到右上方
-        this.draw_delete_btn.moveTo(rtPoint)
+        this.draw_control_btn.parent=sprite;
+        this.draw_delete_btn.parent=sprite;
+        this.draw_control_btn.relativePosition=[0,1];
+        this.draw_delete_btn.relativePosition=[1,0];
+        // let rtPoint={
+        //     x: sprite.x+sprite.width-this.draw_delete_btn.width*.5,
+        //     y: sprite.y-this.draw_delete_btn.height*.5
+        // }
+        // let lbPoint={
+        //     x: sprite.x-this.draw_control_btn.width*.5,
+        //     y: sprite.y+sprite.height-this.draw_control_btn.height*.5
+        // }
+        // //移动到左下方
+        // this.draw_control_btn.moveTo(lbPoint)
+        // //移动到右上方
+        // this.draw_delete_btn.moveTo(rtPoint)
     }
 }
 controlSprite.init();

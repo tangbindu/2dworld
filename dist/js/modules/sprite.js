@@ -29,6 +29,8 @@ class Sprite extends eventTarget{
         this.scale=this.config.scale || 1.0;
         //旋转
         this.rotate=this.config.rotate || 0.0;
+        //旋转点
+        this.rotationOrigin=[0.5,0.5]
         //位移
         this.translate=this.config.translate || [0,0];
         //zindex
@@ -38,6 +40,10 @@ class Sprite extends eventTarget{
         //allowClick
         this.allowClick=this.config.allowClick!=undefined? this.config.allowClick : true;
         //click event
+        //parent 只支持一级
+        this.parent=this.config.parent || null;
+        //相对父元素的定位
+        this.relativePosition=[.5,.5]
     }
     /**
      * 移动
@@ -59,6 +65,32 @@ class Sprite extends eventTarget{
      */
     rotate(deg){
         this.rotate=deg;
+    }
+    /**
+     * 计算相对位置
+     */
+    calculateRelativePosition(){
+        if(this.parent){
+            this.x=this.parent.x+this.parent.width*this.relativePosition[0]-this.width*.5;
+            this.y=this.parent.y+this.parent.height*this.relativePosition[1]-this.height*.5;
+        }
+    }
+    /**
+     * 计算相对旋转
+     */
+    calculateRelativeRotate(){
+        //跟随父节点
+        if(this.parent){
+            this.rotationOrigin=[
+                this.parent.x+this.parent.width*this.parent.rotationOrigin[0],
+                this.parent.y+this.parent.height*this.parent.rotationOrigin[1],
+            ]
+        }else{
+            this.rotationOrigin=[
+                this.x+this.width*this.rotationOrigin[0],
+                this.y+this.height*this.rotationOrigin[1],
+            ]
+        }
     }
 }
 export default Sprite;
