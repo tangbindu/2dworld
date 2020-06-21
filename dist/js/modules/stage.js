@@ -117,10 +117,11 @@ class Stage extends eventTarget{
      */
     removeSprite(sprite){
         this.spriteList.forEach((item,index)=>{
-            if(sprite==item){
+            if(item==sprite){
                 this.spriteList.splice(index,1);
                 this.trigger("removeSprite");
                 this.render();
+                sprite=null;
             }
         })
     }
@@ -159,7 +160,7 @@ class Stage extends eventTarget{
             //计算定位
             sprite.calculateRelativePosition();
             //计算旋转
-            sprite.calculateRelativeRotate();
+            sprite.calculateRelativeRotate(this.ctx);
             sprite.draw(this.ctx);
         })
     }

@@ -31,6 +31,8 @@ class Sprite extends eventTarget{
         this.rotate=this.config.rotate || 0.0;
         //旋转点
         this.rotationOrigin=[0.5,0.5]
+        //旋转点
+        this.rotationOriginPositon=[0,0]
         //位移
         this.translate=this.config.translate || [0,0];
         //zindex
@@ -78,18 +80,15 @@ class Sprite extends eventTarget{
     /**
      * 计算相对旋转
      */
-    calculateRelativeRotate(){
+    calculateRelativeRotate(ctx){
         //跟随父节点
-        if(this.parent){
-            this.rotationOrigin=[
-                this.parent.x+this.parent.width*this.parent.rotationOrigin[0],
-                this.parent.y+this.parent.height*this.parent.rotationOrigin[1],
-            ]
-        }else{
-            this.rotationOrigin=[
-                this.x+this.width*this.rotationOrigin[0],
-                this.y+this.height*this.rotationOrigin[1],
-            ]
+        if(this.parent && this.parent.rotate){
+            this.rotationOriginPositon[0]=this.parent.x+this.parent.width*this.parent.rotationOrigin[0];
+            this.rotationOriginPositon[1]=this.parent.y+this.parent.height*this.parent.rotationOrigin[1];
+            this.rotate=this.parent.rotate;
+        }else if(this.rotate){
+            this.rotationOriginPositon[0]= this.x+this.width*this.rotationOrigin[0];
+            this.rotationOriginPositon[1]= this.y+this.height*this.rotationOrigin[1];
         }
     }
 }

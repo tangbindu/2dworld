@@ -27,6 +27,12 @@ class ImageSprite extends Sprite{
         if(!this.img){
             return;
         }
+        ctx.save();
+        if(this.rotate){
+            ctx.translate(this.rotationOriginPositon[0], this.rotationOriginPositon[1]);
+            ctx.rotate(this.rotate);
+            ctx.translate(-this.rotationOriginPositon[0], -this.rotationOriginPositon[1]);
+        }
         //是否重复填充背景
         if(this.repeat){
             //模型
@@ -39,13 +45,20 @@ class ImageSprite extends Sprite{
                 this.img,
                 this.x,
                 this.y,
-                this.width*this.scale,
-                this.height*this.scale
+                this.width,
+                this.height
             );
         }
+        ctx.restore();
     }
     //点击
     isInPath(ctx,pos) {
+        ctx.save();
+        if(this.rotate){
+            ctx.translate(this.rotationOriginPositon[0], this.rotationOriginPositon[1]);
+            ctx.rotate(this.rotate);
+            ctx.translate(-this.rotationOriginPositon[0], -this.rotationOriginPositon[1]);
+        }
         ctx.beginPath();
         ctx.rect(
             this.x,
@@ -54,6 +67,7 @@ class ImageSprite extends Sprite{
             this.height*this.scale
         );
         ctx.closePath();
+        ctx.restore();
         if(ctx.isPointInPath(pos.x, pos.y)){
             return true;
         }else{

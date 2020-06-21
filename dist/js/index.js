@@ -1,4 +1,5 @@
 import Stage from "./modules/stage.js"
+import ImageSprite from "./modules/sprite_image.js";
 
 //我要创建一个舞台
 let stage=new Stage();
@@ -16,9 +17,9 @@ let backgroundImage=stage.addImageSprite("../imgs/pattern1.png",{
     zindex:-1,
     repeat:true
 })  
-backgroundImage.handler("touchstart",function(){
-    console.log(backgroundImage.name)
-})
+// backgroundImage.handler("touchstart",function(){
+//     console.log(backgroundImage.name)
+// })
 //普通图片
 let images=[
     "ill1",
@@ -51,6 +52,12 @@ images.forEach(image=>{
             controlSprite.attach(imgSprite)
         }
     })
+    //test
+    imgSprite.rotate=Math.random()*360* Math.PI / 180;
+    setInterval(()=>{
+        imgSprite.rotate+=.1;
+        stage.render()
+    },17)
 })
 
 //控制层
@@ -72,6 +79,8 @@ let controlSprite={
         this.draw_delete_btn.handler("touchstart",()=>{
             console.log(this.draw_delete_btn.name)
             stage.removeSprite(this.attachSprite);
+            this.draw_delete_btn.parent=null;
+            this.draw_control_btn.parent=null;
             this.reset();
         })
         this.draw_control_btn.handler("touchstart",()=>{
@@ -86,25 +95,13 @@ let controlSprite={
         this.draw_control_btn.y=-100;
         stage.render();
     },
-    //nie
+    //附着到sprite
     attach(sprite){
         this.attachSprite=sprite;
         this.draw_control_btn.parent=sprite;
         this.draw_delete_btn.parent=sprite;
         this.draw_control_btn.relativePosition=[0,1];
         this.draw_delete_btn.relativePosition=[1,0];
-        // let rtPoint={
-        //     x: sprite.x+sprite.width-this.draw_delete_btn.width*.5,
-        //     y: sprite.y-this.draw_delete_btn.height*.5
-        // }
-        // let lbPoint={
-        //     x: sprite.x-this.draw_control_btn.width*.5,
-        //     y: sprite.y+sprite.height-this.draw_control_btn.height*.5
-        // }
-        // //移动到左下方
-        // this.draw_control_btn.moveTo(lbPoint)
-        // //移动到右上方
-        // this.draw_delete_btn.moveTo(rtPoint)
     }
 }
 controlSprite.init();
