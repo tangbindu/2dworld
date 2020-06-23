@@ -32,7 +32,7 @@ class Sprite extends eventTarget{
         //旋转点
         this.rotationOrigin=[0.5,0.5]
         //旋转点
-        this.rotationOriginPositon=[0,0]
+        this._rotationOriginPositon=[0,0]
         //位移
         this.translate=this.config.translate || [0,0];
         //zindex
@@ -83,13 +83,27 @@ class Sprite extends eventTarget{
     calculateRelativeRotate(ctx){
         //跟随父节点
         if(this.parent && this.parent.rotate){
-            this.rotationOriginPositon[0]=this.parent.x+this.parent.width*this.parent.rotationOrigin[0];
-            this.rotationOriginPositon[1]=this.parent.y+this.parent.height*this.parent.rotationOrigin[1];
+            this._rotationOriginPositon[0]=this.parent.x+this.parent.width*this.parent.rotationOrigin[0];
+            this._rotationOriginPositon[1]=this.parent.y+this.parent.height*this.parent.rotationOrigin[1];
             this.rotate=this.parent.rotate;
         }else if(this.rotate){
-            this.rotationOriginPositon[0]= this.x+this.width*this.rotationOrigin[0];
-            this.rotationOriginPositon[1]= this.y+this.height*this.rotationOrigin[1];
+            this._rotationOriginPositon[0]= this.x+this.width*this.rotationOrigin[0];
+            this._rotationOriginPositon[1]= this.y+this.height*this.rotationOrigin[1];
         }
+    }
+    /**
+     * 设置缩放
+     * @param {numner} scaleVal
+     */
+    setScale(scaleVal){
+        //考虑缩放点
+        this.scale=scaleVal;
+        let ow=this.width;
+        let oh=this.height;
+        this.width=this.width*scaleVal;
+        this.height=this.height*scaleVal;
+        this.x-=((this.width-ow)*this.rotationOrigin[0])
+        this.y-=((this.height-oh)*this.rotationOrigin[1])
     }
 }
 export default Sprite;

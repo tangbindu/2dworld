@@ -113,6 +113,13 @@ class Stage extends eventTarget{
         return imgSprite;
     }
     /**
+     * 添加普通精灵
+     */
+    addSprite(sprite){
+        this.spriteList.push(sprite)
+        return sprite;
+    }
+    /**
      * 移除精灵
      */
     removeSprite(sprite){

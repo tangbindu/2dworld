@@ -94,11 +94,11 @@ class TouchEvent extends eventTarget{
                 this.currentPos.x-this.previousPos.x,
                 this.currentPos.y-this.previousPos.y
             ];
-        }else if( type=="touchend"){
             this.totalMoveVector=[
                 this.currentPos.x-this.startPos.x,
                 this.currentPos.y-this.startPos.y
             ];
+        }else if( type=="touchend"){
             this.isMoving=false;
         }
         this.trigger("mixTouchEvent");
