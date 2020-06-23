@@ -9,7 +9,7 @@ let stage=new Stage();
 //我要把我的舞台放在页面厘
 document.getElementById("stageContainer").appendChild(stage.view)
 //设置下舞台大小
-stage.resize(1920,1080)
+stage.resize(1080,1080)
 //设置舞台颜色
 stage.setBackgroundColor("gray")
 
@@ -28,27 +28,30 @@ backgroundImage.handler("touchstart",()=>{
  * 贴纸
 */
 let stickers=[
-    "ill1",
-    "ill2",
     "ill3",
     "ill4",
     "ill5",
     "ill6",
     "ill7",
-    "ill7",
-    "ill7",
-    "ill7",
     "ill8",
     "ill9",
     "ill9",
     "ill9",
-    // "ill10",
-    // "ill11",
+    "ill10",
+    "ill11",
+    "ill12",
+    "ill13",
+    "ill14",
+    "ill15",
+    "ill16",
+    "ill17",
+    "ill18",
+    "ill19",
 ]
 stickers.forEach(image=>{
     let sprite=stage.addImageSprite("../imgs/sticker/"+image+".png",{
-        x:stage.width*Math.random()*.6+200,
-        y:stage.height*Math.random()*.6+100,
+        x:stage.width*Math.random(),
+        y:stage.height*Math.random()*.3+100,
         useDrag:true,
         zindex:Math.random()*100
     })  
@@ -56,6 +59,10 @@ stickers.forEach(image=>{
         if(sprite.name!="control"){
             controlSprite.attach(sprite)
         }
+    })
+    sprite.handler("imgLoaded",function(){
+        sprite.width=sprite.width*.6;
+        sprite.height=sprite.height*.6;
     })
 })
 /** 
@@ -76,8 +83,8 @@ let rolesName=[
 roles.forEach((rolePath,index)=>{
     let role=stage.addImageSprite("../imgs/role/"+rolePath+".png",{
         name:"role",
-        x:stage.width*Math.random()*.6+200,
-        y:stage.height*Math.random()*.6+100,
+        x:stage.width*Math.random()*.5+200,
+        y:stage.height*Math.random()*.1+stage.height*.5,
         useDrag:true,
         zindex:Math.random()*100
     })  
@@ -119,28 +126,28 @@ roles.forEach((rolePath,index)=>{
     stage.addSprite(namebrand)
     stage.addSprite(nametext)
     //重写点击区
-    role.isInPath=function(ctx,pos) {
-        ctx.save();
-        if(this.rotate){
-            ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
-            ctx.rotate(this.rotate);
-            ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
-        }
-        ctx.beginPath();
-        ctx.rect(
-            this.x+this.width*.2,
-            this.y,
-            this.width*.6,
-            this.height
-        );
-        ctx.closePath();
-        ctx.restore();
-        if(ctx.isPointInPath(pos.x, pos.y)){
-            return true;
-        }else{
-            return false
-        }
-    }
+    // role.isInPath=function(ctx,pos) {
+    //     ctx.save();
+    //     if(this.rotate){
+    //         ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
+    //         ctx.rotate(this.rotate);
+    //         ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
+    //     }
+    //     ctx.beginPath();
+    //     ctx.rect(
+    //         this.x+this.width*.2,
+    //         this.y,
+    //         this.width*.6,
+    //         this.height
+    //     );
+    //     ctx.closePath();
+    //     ctx.restore();
+    //     if(ctx.isPointInPath(pos.x, pos.y)){
+    //         return true;
+    //     }else{
+    //         return false
+    //     }
+    // }
 })
 
 

@@ -25,8 +25,6 @@ class Sprite extends eventTarget{
         this.index=this.config.index || 100;
         //选中
         this.active=this.config.active || false;
-        //缩放
-        this.scale=this.config.scale || 1.0;
         //旋转
         this.rotate=this.config.rotate || 0.0;
         //旋转点
@@ -99,15 +97,15 @@ class Sprite extends eventTarget{
      * 设置缩放
      * @param {numner} scaleVal
      */
-    setScale(scaleVal){
-        //考虑缩放点
-        this.scale=scaleVal;
-        let ow=this.width;
-        let oh=this.height;
-        this.width=this.width*scaleVal;
-        this.height=this.height*scaleVal;
-        this.x-=((this.width-ow)*this.rotationOrigin[0])
-        this.y-=((this.height-oh)*this.rotationOrigin[1])
-    }
+    // setScale(scaleVal){
+    //     //考虑缩放点
+    //     this.scale=scaleVal;
+    //     let ow=this.width;
+    //     let oh=this.height;
+    //     this.width=this.width*scaleVal;
+    //     this.height=this.height*scaleVal;
+    //     this.x-=((this.width-ow)*this.rotationOrigin[0])
+    //     this.y-=((this.height-oh)*this.rotationOrigin[1])
+    // }
 }
 export default Sprite;

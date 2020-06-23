@@ -20,8 +20,8 @@ class RectSprite extends Sprite{
         ctx.shadowBlur=3;
         ctx.shadowColor="#000000";
         ctx.setLineDash([10, 10])
-        // ctx.fillRect(this.x,this.y,this.width*this.scale,this.height*this.scale);
-        ctx.strokeRect(this.x,this.y,this.width*this.scale,this.height*this.scale);
+        // ctx.fillRect(this.x,this.y,this.width,this.height);
+        ctx.strokeRect(this.x,this.y,this.width,this.height);
         ctx.restore();
     }
     //点击
@@ -36,8 +36,8 @@ class RectSprite extends Sprite{
         ctx.rect(
             this.x,
             this.y,
-            this.width*this.scale,
-            this.height*this.scale
+            this.width,
+            this.height
         );
         ctx.closePath();
         ctx.restore();

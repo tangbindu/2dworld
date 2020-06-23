@@ -63,8 +63,8 @@ class ImageSprite extends Sprite{
         ctx.rect(
             this.x,
             this.y,
-            this.width*this.scale,
-            this.height*this.scale
+            this.width,
+            this.height
         );
         ctx.closePath();
         ctx.restore();

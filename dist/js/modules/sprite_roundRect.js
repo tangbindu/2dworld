@@ -6,6 +6,7 @@ class RoundRectSprite extends Sprite{
         super(config);
         this.config=config || {};
         this.radius=this.config.radius || 0;
+        this.fillStyle=this.config.fillStyle || "rgba(0,0,0,.3)";
     }
     //绘制图形精灵
     draw(ctx) {
@@ -15,7 +16,7 @@ class RoundRectSprite extends Sprite{
             ctx.rotate(this.rotate);
             ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
         }
-        ctx.fillStyle = "rgba(0,0,0,.5)";
+        ctx.fillStyle = this.fillStyle;
         ctx.beginPath();
         ctx.arc(this.x + this.radius, this.y + this.radius, this.radius, Math.PI, Math.PI * 3 / 2);
         ctx.lineTo(this.width - this.radius + this.x, this.y);
@@ -41,8 +42,8 @@ class RoundRectSprite extends Sprite{
         ctx.rect(
             this.x,
             this.y,
-            this.width*this.scale,
-            this.height*this.scale
+            this.width,
+            this.height
         );
         ctx.closePath();
         ctx.restore();
