@@ -59,10 +59,10 @@ class Stage extends eventTarget{
         this.spriteList.forEach(item=>{
             if(item.isInPath(this.ctx,pos) && item.allowClick){
                 this.activeSprite=item;
-                this.activeSprite.trigger("touchstart")
-                this.render();
             }
         })
+        this.activeSprite.trigger("touchstart")
+        this.render();
     }
     /**
      * drag精灵
@@ -127,6 +127,7 @@ class Stage extends eventTarget{
             if(item==sprite){
                 this.spriteList.splice(index,1);
                 this.trigger("removeSprite");
+                item.trigger("remove")
                 this.render();
                 sprite=null;
             }
@@ -168,7 +169,7 @@ class Stage extends eventTarget{
             sprite.calculateRelativePosition();
             //计算旋转
             sprite.calculateRelativeRotate(this.ctx);
-            sprite.draw(this.ctx);
+            sprite.visible && sprite.draw(this.ctx);
         })
     }
 };

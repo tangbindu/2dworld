@@ -1,10 +1,22 @@
 import tools from "./tools.js";
 import Sprite from "./Sprite.js";
 // 绘图 
-class RectSprite extends Sprite{
-    constructor(config) {
+class TextSprite extends Sprite{
+    constructor(text,config) {
         super(config);
+        this.text=text;
         this.config=config || {};
+        this.textAlign=this.config.textAlign || "center"//left right center
+        this.textBaseline=this.config.textBaseline || "alphabetic" //top,middle,bottom
+        this.strokeStyle=this.config.strokeStyle || "#ffffff"
+        this.strokeWidth=this.config.strokeWidth || 2
+        this.fontSize=this.config.fontSize || 24
+        this.fillStyle=this.config.fillStyle || "#ffffff"
+        this.init();
+    }
+    //初始化
+    init(){
+       //计算文本宽度和高度
     }
     //绘制图形精灵
     draw(ctx) {
@@ -14,14 +26,14 @@ class RectSprite extends Sprite{
             ctx.rotate(this.rotate);
             ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
         }
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = '#fff';
-        // ctx.fillStyle = 'rgba(0,233,0,.1)';
-        ctx.shadowBlur=3;
-        ctx.shadowColor="#000000";
-        ctx.setLineDash([10, 10])
-        // ctx.fillRect(this.x,this.y,this.width*this.scale,this.height*this.scale);
-        ctx.strokeRect(this.x,this.y,this.width*this.scale,this.height*this.scale);
+        ctx.textAlign = this.textAlign;
+        ctx.textBaseline = this.textBaseline;
+        ctx.strokeStyle =  this.strokeStyle;
+        ctx.strokeWidth= this.strokeWidth;
+        ctx.font = this.fontSize+'px palatino';
+        ctx.fillStyle = this.fillStyle;  
+        this.strokeWidth && ctx.strokeText(this.text, this.x, this.y);    
+        ctx.fillText(this.text, this.x, this.y);         
         ctx.restore();
     }
     //点击
@@ -49,4 +61,4 @@ class RectSprite extends Sprite{
     }
 }
 
-export default RectSprite;
+export default TextSprite;

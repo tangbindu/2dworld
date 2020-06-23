@@ -1,7 +1,8 @@
 import Stage from "./modules/stage.js"
 import ImageSprite from "./modules/sprite_image.js";
 import RectSprite from "./modules/sprite_rect.js";
-import Sprite from "./modules/Sprite.js";
+import RoundRectSprite from "./modules/sprite_roundRect.js";
+import TextSprite from "./modules/sprite_text.js";
 
 //我要创建一个舞台
 let stage=new Stage();
@@ -19,11 +20,14 @@ let backgroundImage=stage.addImageSprite("../imgs/pattern1.png",{
     zindex:-1,
     repeat:true
 })  
-// backgroundImage.handler("touchstart",function(){
-//     console.log(backgroundImage.name)
-// })
-//普通图片
-let images=[
+backgroundImage.handler("touchstart",()=>{
+    controlSprite.unAttach();
+    controlSprite.reset();
+})
+/** 
+ * 贴纸
+*/
+let stickers=[
     "ill1",
     "ill2",
     "ill3",
@@ -31,36 +35,116 @@ let images=[
     "ill5",
     "ill6",
     "ill7",
+    "ill7",
+    "ill7",
+    "ill7",
     "ill8",
     "ill9",
-    "ill10",
-    "ill11",
-    "pattern2"
+    "ill9",
+    "ill9",
+    // "ill10",
+    // "ill11",
 ]
-images.forEach(image=>{
-    let imgSprite=stage.addImageSprite("../imgs/illustration/"+image+".png",{
+stickers.forEach(image=>{
+    let sprite=stage.addImageSprite("../imgs/sticker/"+image+".png",{
         x:stage.width*Math.random()*.6+200,
         y:stage.height*Math.random()*.6+100,
         useDrag:true,
         zindex:Math.random()*100
     })  
-    imgSprite.handler("touchstart",()=>{
-        if(imgSprite.name!="control"){
-            controlSprite.attach(imgSprite)
+    sprite.handler("touchstart",()=>{
+        if(sprite.name!="control"){
+            controlSprite.attach(sprite)
         }
     })
-    imgSprite.handler("dragging",()=>{
-        if(imgSprite.name!="control"){
-            controlSprite.attach(imgSprite)
-        }
-    })
-    //test
-    // imgSprite.rotate=Math.random()*360* Math.PI / 180;
-    // setInterval(()=>{
-    //     imgSprite.rotate+=.1;
-    //     stage.render()
-    // },17)
 })
+/** 
+ * 角色
+*/
+let roles=[
+    "role1",
+    "role2",
+    "role3",
+    "role4"
+]
+let rolesName=[
+    "Fate-Soul",
+    "半俗不雅 ヽ",
+    "我忘不掉你！",
+    "妹妹，哥哥保护你 哥哥，妹妹守护你"
+]
+roles.forEach((rolePath,index)=>{
+    let role=stage.addImageSprite("../imgs/role/"+rolePath+".png",{
+        name:"role",
+        x:stage.width*Math.random()*.6+200,
+        y:stage.height*Math.random()*.6+100,
+        useDrag:true,
+        zindex:Math.random()*100
+    })  
+    role.handler("touchstart",()=>{
+        if(role.name!="control"){
+            controlSprite.attach(role)
+        }
+    })
+    //动态计算宽度
+    stage.ctx.font = 20+'px palatino';
+    let bandWidth=stage.ctx.measureText(rolesName[index]).width+40;
+
+    let namebrand=new RoundRectSprite(
+        {
+            radius:20,
+            height:40,
+            width:bandWidth,
+            relativePosition:[.5,0],
+            zindex:100001
+        }
+    );
+    namebrand.parent=role;
+
+    let nametext=new TextSprite(rolesName[index],{
+        name:"studentName",
+        height:40,
+        width:bandWidth,
+        textAlign:"start",//left right center
+        fontSize:20,
+        relativePosition:[.5,0,20,25],
+        zindex:100002
+    });
+    nametext.parent=role;
+    role.handler("remove",function(){
+        stage.removeSprite(namebrand)
+        stage.removeSprite(nametext)
+    })
+    //名字
+    stage.addSprite(namebrand)
+    stage.addSprite(nametext)
+    //重写点击区
+    role.isInPath=function(ctx,pos) {
+        ctx.save();
+        if(this.rotate){
+            ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
+            ctx.rotate(this.rotate);
+            ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
+        }
+        ctx.beginPath();
+        ctx.rect(
+            this.x+this.width*.2,
+            this.y,
+            this.width*.6,
+            this.height
+        );
+        ctx.closePath();
+        ctx.restore();
+        if(ctx.isPointInPath(pos.x, pos.y)){
+            return true;
+        }else{
+            return false
+        }
+    }
+})
+
+
+
 
 //控制层
 let controlSprite={
@@ -71,13 +155,14 @@ let controlSprite={
     //删除按钮
     draw_delete_btn:stage.addImageSprite("../imgs/draw_delete_btn.png",{
         name:"control",
-        zindex:100000
+        zindex:100010
     }),
     //控制按钮
     draw_control_btn:stage.addImageSprite("../imgs/draw_control_btn.png",{
         name:"control",
-        zindex:100000
+        zindex:100010
     }),
+    //矩形框
     draw_control_border:stage.addSprite(new RectSprite({
         name:"border",
         allowClick:false,
@@ -108,9 +193,7 @@ let controlSprite={
     init(){
         this.draw_delete_btn.handler("touchstart",()=>{
             stage.removeSprite(this.attachSprite);
-            this.draw_delete_btn.parent=null;
-            this.draw_control_btn.parent=null;
-            this.draw_control_border.parent=null;
+            this.unAttach();
             this.reset();
         })
         this.draw_control_btn.handler("touchstart",()=>{
@@ -146,6 +229,11 @@ let controlSprite={
         }) 
         this.reset();
     },
+    unAttach(){
+        this.draw_delete_btn.parent=null;
+        this.draw_control_btn.parent=null;
+        this.draw_control_border.parent=null;
+    },
     reset(){
         this.draw_delete_btn.x=-1000;
         this.draw_delete_btn.y=-1000;
@@ -173,6 +261,13 @@ let controlSprite={
         this.draw_control_btn.rotate=this.draw_control_btn.parent.rotate;
         this.draw_delete_btn.rotate=this.draw_delete_btn.parent.rotate;
         this.draw_control_border.rotate=this.draw_control_border.parent.rotate;
+        if(sprite.name=="role"){
+            this.draw_delete_btn.visible=false
+            // this.draw_control_border.visible=false;
+        }else{
+            this.draw_delete_btn.visible=true
+            // this.draw_control_border.visible=true;
+        }
     }
 }
 controlSprite.init();
@@ -180,4 +275,4 @@ controlSprite.init();
 
 window.stage=stage;
 window.controlSprite=controlSprite;
-window.sprite1=stage.getSpriteByName("../imgs/illustration/ill1.png")[0];
+window.sprite1=stage.getSpriteByName("../imgs/sticker/ill1.png")[0];
