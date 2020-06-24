@@ -9,7 +9,7 @@ let stage=new Stage();
 //我要把我的舞台放在页面厘
 document.getElementById("stageContainer").appendChild(stage.view)
 //设置下舞台大小
-stage.resize(1080,1080)
+stage.resize(1920*.8,1080*.8)
 //设置舞台颜色
 stage.setBackgroundColor("gray")
 
@@ -29,12 +29,12 @@ backgroundImage.handler("touchstart",()=>{
 */
 let stickers=[
     "ill3",
-    "ill4",
-    "ill5",
-    "ill6",
-    "ill7",
-    "ill8",
-    "ill9",
+    // "ill4",
+    // "ill5",
+    // "ill6",
+    // "ill7",
+    // "ill8",
+    // "ill9",
     "ill9",
     "ill9",
     "ill10",
@@ -43,21 +43,23 @@ let stickers=[
     "ill13",
     "ill14",
     "ill15",
-    "ill16",
-    "ill17",
-    "ill18",
-    "ill19",
+    // "ill16",
+    // "ill17",
+    // "ill18",
+    "ill27",
 ]
 stickers.forEach(image=>{
     let sprite=stage.addImageSprite("../imgs/sticker/"+image+".png",{
+        name:'sticker',
         x:stage.width*Math.random(),
-        y:stage.height*Math.random()*.3+100,
+        y:stage.height*.1*Math.random(),
         useDrag:true,
         zindex:Math.random()*100
     })  
     sprite.handler("touchstart",()=>{
         if(sprite.name!="control"){
             controlSprite.attach(sprite)
+            sprite.zindex=stage.getSpriteByName("sticker").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
         }
     })
     sprite.handler("imgLoaded",function(){
@@ -70,9 +72,13 @@ stickers.forEach(image=>{
 */
 let roles=[
     "role1",
+    "role8",
     "role2",
+    "role6",
     "role3",
-    "role4"
+    "role4",
+    "role5",
+    "role7",
 ]
 let rolesName=[
     "Fate-Soul",
@@ -83,15 +89,15 @@ let rolesName=[
 roles.forEach((rolePath,index)=>{
     let role=stage.addImageSprite("../imgs/role/"+rolePath+".png",{
         name:"role",
-        x:stage.width*Math.random()*.5+200,
-        y:stage.height*Math.random()*.1+stage.height*.5,
+        x:stage.width/roles.length*index,
+        y:stage.height-500,
         useDrag:true,
-        zindex:Math.random()*100
+        zindex:500
     })  
     role.handler("touchstart",()=>{
-        if(role.name!="control"){
-            controlSprite.attach(role)
-        }
+        controlSprite.attach(role)
+        //设置层级
+        role.zindex=stage.getSpriteByName("role").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
     })
     //动态计算宽度
     stage.ctx.font = 20+'px palatino';
@@ -126,28 +132,28 @@ roles.forEach((rolePath,index)=>{
     stage.addSprite(namebrand)
     stage.addSprite(nametext)
     //重写点击区
-    // role.isInPath=function(ctx,pos) {
-    //     ctx.save();
-    //     if(this.rotate){
-    //         ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
-    //         ctx.rotate(this.rotate);
-    //         ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
-    //     }
-    //     ctx.beginPath();
-    //     ctx.rect(
-    //         this.x+this.width*.2,
-    //         this.y,
-    //         this.width*.6,
-    //         this.height
-    //     );
-    //     ctx.closePath();
-    //     ctx.restore();
-    //     if(ctx.isPointInPath(pos.x, pos.y)){
-    //         return true;
-    //     }else{
-    //         return false
-    //     }
-    // }
+    role.isInPath=function(ctx,pos) {
+        ctx.save();
+        if(this.rotate){
+            ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
+            ctx.rotate(this.rotate);
+            ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
+        }
+        ctx.beginPath();
+        ctx.rect(
+            this.x+(this.width-200)/2,
+            this.y,
+            200,
+            this.height
+        );
+        ctx.closePath();
+        ctx.restore();
+        if(ctx.isPointInPath(pos.x, pos.y)){
+            return true;
+        }else{
+            return false
+        }
+    }
 })
 
 
@@ -214,7 +220,7 @@ let controlSprite={
                 this.draw_control_border.width=this.attachSprite.width;
                 this.draw_control_border.height=this.attachSprite.height;
                 //开始点 左下方
-                let vs={x:-this.attachSprite.width*.5,y:-this.attachSprite.height*.5};
+                let vs={x:this.attachSprite.width*.5,y:-this.attachSprite.height*.5};
                 //移动点
                 let ve={
                     x:stage.touchEvent.currentPos.x-(this.attachSprite.x+this.attachSprite.width*.5),
@@ -261,18 +267,18 @@ let controlSprite={
         this.draw_control_border.width=sprite.width;
         this.draw_control_border.height=sprite.height;
         //位置
-        this.draw_control_btn.relativePosition=[0,1];
-        this.draw_delete_btn.relativePosition=[1,0];
+        this.draw_control_btn.relativePosition=[1,1];
+        this.draw_delete_btn.relativePosition=[0,0];
         this.draw_control_border.relativePosition=[.5,.5];
         //旋转
         this.draw_control_btn.rotate=this.draw_control_btn.parent.rotate;
         this.draw_delete_btn.rotate=this.draw_delete_btn.parent.rotate;
         this.draw_control_border.rotate=this.draw_control_border.parent.rotate;
         if(sprite.name=="role"){
-            this.draw_delete_btn.visible=false
+            // this.draw_delete_btn.visible=false
             // this.draw_control_border.visible=false;
         }else{
-            this.draw_delete_btn.visible=true
+            // this.draw_delete_btn.visible=true
             // this.draw_control_border.visible=true;
         }
     }
