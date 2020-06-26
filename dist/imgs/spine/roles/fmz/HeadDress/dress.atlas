@@ -1,0 +1,12 @@
+dress.png
+size: 160, 99
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Headdress
+  rotate: false
+  xy: 0, 0
+  size: 160, 99
+  orig: 160, 99
+  offset: 0, 0
+  index: 0

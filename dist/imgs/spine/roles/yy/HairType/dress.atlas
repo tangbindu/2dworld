@@ -1,0 +1,19 @@
+dress.png
+size: 236, 117
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Fringe_Back
+  rotate: false
+  xy: 0, 0
+  size: 141, 117
+  orig: 141, 117
+  offset: 0, 0
+  index: 0
+Fringe_Front
+  rotate: true
+  xy: 141, 0
+  size: 117, 95
+  orig: 117, 95
+  offset: 0, 0
+  index: 1

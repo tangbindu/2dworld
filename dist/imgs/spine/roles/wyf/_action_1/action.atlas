@@ -1,0 +1,19 @@
+action.png
+size: 130, 35
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Eye_LoversSword_05
+  rotate: false
+  xy: 0, 0
+  size: 75, 35
+  orig: 75, 35
+  offset: 0, 0
+  index: 0
+Mouth_Expression/Mouth_smile_06
+  rotate: false
+  xy: 75, 0
+  size: 55, 35
+  orig: 55, 35
+  offset: 0, 0
+  index: 1

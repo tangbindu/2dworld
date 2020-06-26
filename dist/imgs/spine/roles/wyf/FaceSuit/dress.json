@@ -1,0 +1,70 @@
+{
+  "type": "FaceSuit",
+  "name": "Export",
+  "slots_count": 3,
+  "attachments": {
+    "Head": {
+      "Head": {
+        "x": 64.19,
+        "y": -4.36,
+        "rotation": -89.08,
+        "width": 111,
+        "height": 126
+      }
+    },
+    "Mouth": {
+      "Mouth_basic_00": {
+        "x": 5.24,
+        "y": -1.69,
+        "rotation": -89.08,
+        "width": 29,
+        "height": 21
+      },
+      "Mouth_basic_01": {
+        "x": 5.5,
+        "y": -1.9,
+        "rotation": -89.08,
+        "width": 29,
+        "height": 26
+      },
+      "Mouth_basic_02": {
+        "x": 5.83,
+        "y": 0.21,
+        "rotation": -89.08,
+        "width": 25,
+        "height": 20
+      }
+    },
+    "Eyes": {
+      "Eye_Basicopen_00": {
+        "x": 10.35,
+        "y": -2.24,
+        "rotation": -89.53,
+        "width": 88,
+        "height": 32
+      },
+      "Eye_Basicclose_00": {
+        "x": 10.04,
+        "y": -2.12,
+        "rotation": -89.53,
+        "width": 88,
+        "height": 32
+      },
+      "Eye_Basicdoubt_00": {
+        "x": 10.99,
+        "y": -2.18,
+        "rotation": -89.53,
+        "width": 88,
+        "height": 32
+      },
+      "Eye_Basicwink_00": {
+        "x": 11.2,
+        "y": -1.77,
+        "rotation": -89.53,
+        "width": 88,
+        "height": 32
+      }
+    }
+  },
+  "Ver": "1.1"
+}

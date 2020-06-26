@@ -1,0 +1,103 @@
+action.png
+size: 104, 508
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Eye_Saw_00
+  rotate: false
+  xy: 0, 0
+  size: 104, 96
+  orig: 104, 96
+  offset: 0, 0
+  index: 0
+Eye_Saw_01
+  rotate: false
+  xy: 0, 288
+  size: 103, 95
+  orig: 103, 95
+  offset: 0, 0
+  index: 3
+Eye_Saw_02
+  rotate: false
+  xy: 0, 96
+  size: 104, 96
+  orig: 104, 96
+  offset: 0, 0
+  index: 1
+Eye_Saw_03
+  rotate: false
+  xy: 0, 383
+  size: 95, 48
+  orig: 95, 48
+  offset: 0, 0
+  index: 4
+Eyes_Expression/Eye_Close_00
+  rotate: false
+  xy: 0, 431
+  size: 67, 27
+  orig: 67, 27
+  offset: 0, 0
+  index: 7
+Line
+  rotate: false
+  xy: 0, 192
+  size: 104, 96
+  orig: 104, 96
+  offset: 0, 0
+  index: 2
+Mouth_Saw_00
+  rotate: false
+  xy: 67, 431
+  size: 32, 23
+  orig: 32, 23
+  offset: 0, 0
+  index: 8
+Mouth_Saw_01
+  rotate: true
+  xy: 26, 458
+  size: 22, 27
+  orig: 22, 27
+  offset: 0, 0
+  index: 11
+Mouth_Saw_02
+  rotate: false
+  xy: 0, 480
+  size: 40, 28
+  orig: 40, 28
+  offset: 0, 0
+  index: 13
+Mouth_Saw_03
+  rotate: false
+  xy: 67, 454
+  size: 25, 14
+  orig: 25, 14
+  offset: 0, 0
+  index: 9
+Saw_03
+  rotate: false
+  xy: 53, 468
+  size: 43, 28
+  orig: 43, 28
+  offset: 0, 0
+  index: 12
+Saw_04
+  rotate: true
+  xy: 0, 458
+  size: 19, 26
+  orig: 19, 26
+  offset: 0, 0
+  index: 10
+Saw_05
+  rotate: true
+  xy: 95, 407
+  size: 12, 6
+  orig: 12, 6
+  offset: 0, 0
+  index: 6
+sweat01
+  rotate: false
+  xy: 95, 383
+  size: 8, 24
+  orig: 8, 24
+  offset: 0, 0
+  index: 5

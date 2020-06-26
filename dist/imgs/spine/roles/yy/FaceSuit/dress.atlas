@@ -1,0 +1,61 @@
+dress.png
+size: 124, 253
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Eye_Basicclose_00
+  rotate: false
+  xy: 0, 128
+  size: 84, 31
+  orig: 84, 31
+  offset: 0, 0
+  index: 1
+Eye_Basicdoubt_00
+  rotate: true
+  xy: 84, 170
+  size: 83, 40
+  orig: 83, 40
+  offset: 0, 0
+  index: 7
+Eye_Basicopen_00
+  rotate: false
+  xy: 0, 197
+  size: 84, 40
+  orig: 84, 40
+  offset: 0, 0
+  index: 6
+Eye_Basicwink_00
+  rotate: false
+  xy: 0, 159
+  size: 83, 38
+  orig: 83, 38
+  offset: 0, 0
+  index: 5
+Head
+  rotate: false
+  xy: 0, 0
+  size: 115, 128
+  orig: 115, 128
+  offset: 0, 0
+  index: 0
+Mouth_basic_00
+  rotate: false
+  xy: 84, 154
+  size: 35, 16
+  orig: 35, 16
+  offset: 0, 0
+  index: 4
+Mouth_basic_01
+  rotate: false
+  xy: 84, 140
+  size: 34, 14
+  orig: 34, 14
+  offset: 0, 0
+  index: 3
+Mouth_basic_02
+  rotate: false
+  xy: 84, 128
+  size: 28, 12
+  orig: 28, 12
+  offset: 0, 0
+  index: 2

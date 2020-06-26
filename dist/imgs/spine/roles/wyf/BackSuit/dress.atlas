@@ -1,0 +1,12 @@
+dress.png
+size: 122, 171
+format: RGBA4444
+filter: Linear,Linear
+repeat: none
+Back_Ornament
+  rotate: false
+  xy: 0, 0
+  size: 122, 171
+  orig: 122, 171
+  offset: 0, 0
+  index: 0
