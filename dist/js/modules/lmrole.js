@@ -1,4 +1,4 @@
-
+import tools from "./tools.js";
 //依赖的动画
 import SpinePlus from "./spinePlus.js";
 //角色封装
@@ -151,9 +151,8 @@ let lmrole = {
     role:null,
     //初始化
     init(){
-        this.offsetScreen.width=800;
-        this.offsetScreen.height=800;
-        document.getElementById("stageContainer").appendChild(this.offsetScreen);
+        this.offsetScreen.width=1200;
+        this.offsetScreen.height=400;
         //角色
         this.role=new Role({
             png:"../imgs/spine/_skeleton/role.png",
@@ -199,10 +198,20 @@ let lmrole = {
         });
     },
     addRole(dressids){
-        dressids.forEach(id => {
-            this.loadDress(id)
-            this.loadAction(id)
-        });
+        return new Promise((resolve, reject)=>{
+            dressids.forEach(id => {
+                this.loadDress(id)
+                this.loadAction(id)
+            });
+            setTimeout(()=>{
+                resolve(
+                    tools.imgTirm(
+                        this.offsetScreen,
+                        this.offsetScreen.getContext("2d")
+                    )
+                )
+            },1630)
+        })
     }
     
 }

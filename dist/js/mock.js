@@ -11,28 +11,28 @@ export default {
         pose: [
             {
                 x: 100,
-                y: 700,
+                y: 300,
                 //给动作名称，相对路径，没有的话就用defaultAction
                 action: "action1"
             },
             {
-                x: 100,
-                y: 700,
+                x: 300,
+                y: 300,
+                action: "action1"
+            },
+            {
+                x: 600,
+                y: 300,
+                action: "action1"
+            },
+            {
+                x: 800,
+                y: 300,
                 action: "action1"
             },
             {
                 x: 100,
-                y: 700,
-                action: "action1"
-            },
-            {
-                x: 100,
-                y: 700,
-                action: "action1"
-            },
-            {
-                x: 100,
-                y: 700,
+                y: 300,
                 action: "action1"
             },
         ]
@@ -46,7 +46,7 @@ export default {
                 roleid: '' 
             }, 
             head: "", 
-            nick: '半俗不雅', 
+            nick: '天天happy', 
             uin: '2323223' 
         }
     ]
