@@ -66,8 +66,8 @@ function SpinePlus(canvas,config){
    * @param {dom} canvas
    */
   this._canvas=canvas;
-  this._canvas.height=this._canvas.clientHeight;
-  this._canvas.width=this._canvas.clientWidth;
+  // this._canvas.height=this._canvas.clientHeight;
+  // this._canvas.width=this._canvas.clientWidth;
   config=config || {};
   !canvas && console.error("缺少canvas");
   !config.json && console.error("缺少必要骨骼数据.json");
@@ -169,7 +169,7 @@ function SpinePlus(canvas,config){
   this.initTime=0;
 
   this.init=(function(){
-    this._config.ratina && this.setRatina(this._canvas);
+    // this._config.ratina && this.setRatina(this._canvas);
     this._ctx=this.getContext(this._canvas);
     this._assetManager= this._usewebgl ? new this.webgl.AssetManager(this._ctx) : new this.canvas.AssetManager(this._ctx);
     this._assetManager.loadText(this._config.json);
