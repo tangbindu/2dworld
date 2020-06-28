@@ -1,6 +1,6 @@
 export default {
-    //活动模版
-    photoTemplate:{
+    //选模版
+    photoTemplates:[{
         //模版宽度
         width:1080,
         //模版高度
@@ -37,8 +37,9 @@ export default {
             },
         ]
         //action
-    },
-    roleList:[
+    }],
+    //选角色
+    roles:[
         {
             dressList:[2323,2323,2323],
             name:"Fate-Soul",
@@ -56,5 +57,4 @@ export default {
             name:"妹妹，哥哥保护你 哥哥，妹妹守护你",
         },
     ]
-    
 }

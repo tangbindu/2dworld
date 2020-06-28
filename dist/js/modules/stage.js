@@ -51,9 +51,12 @@ class Stage extends eventTarget{
                 this.releaseSprite();
             }
         })
+        // this.touchEvent.handler("click",()=>{
+        //     this.clickSprite(this.touchEvent.currentPos);
+        // })
     }
     /**
-     * 点击精灵
+     * touch精灵
      */
     touchSprite(pos){
         this.spriteList.forEach(item=>{
@@ -61,9 +64,22 @@ class Stage extends eventTarget{
                 this.activeSprite=item;
             }
         })
-        this.activeSprite.trigger("touchstart")
+        this.activeSprite && this.activeSprite.trigger("touchstart")
         this.render();
     }
+    /**
+     * click精灵
+     */
+    // clickSprite(pos){
+    //     let clicksprite=null;
+    //     this.spriteList.forEach(item=>{
+    //         if(item.isInPath(this.ctx,pos) && item.allowClick){
+    //             clicksprite=item;
+    //         }
+    //     })
+    //     clicksprite && clicksprite.trigger("click");
+    //     this.render();
+    // }
     /**
      * drag精灵
      */

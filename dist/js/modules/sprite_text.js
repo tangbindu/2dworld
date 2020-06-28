@@ -30,7 +30,7 @@ class TextSprite extends Sprite{
         ctx.textBaseline = this.textBaseline;
         ctx.strokeStyle =  this.strokeStyle;
         ctx.strokeWidth= this.strokeWidth;
-        ctx.font = this.fontSize+'px palatino';
+        ctx.font = this.fontSize+'px PingFangSC-Regular';
         ctx.fillStyle = this.fillStyle;  
         this.strokeWidth && ctx.strokeText(this.text, this.x, this.y);    
         ctx.fillText(this.text, this.x, this.y);         

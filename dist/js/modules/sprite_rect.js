@@ -15,11 +15,11 @@ class RectSprite extends Sprite{
             ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
         }
         ctx.lineWidth = 4;
-        ctx.strokeStyle = '#fff';
+        ctx.strokeStyle = '#6346ff';
         // ctx.fillStyle = 'rgba(0,233,0,.1)';
         ctx.shadowBlur=3;
         ctx.shadowColor="#000000";
-        ctx.setLineDash([10, 10])
+        // ctx.setLineDash([10, 10])
         // ctx.fillRect(this.x,this.y,this.width,this.height);
         ctx.strokeRect(this.x,this.y,this.width,this.height);
         ctx.restore();

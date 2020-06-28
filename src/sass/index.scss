@@ -2,6 +2,7 @@
 html,body{
     width: 100%;
     height: 100%;
+    background-color: #eff0f6;
 }
 #stageContainer{
     width: 100%;
@@ -10,4 +11,11 @@ html,body{
 #stageContainer canvas{
     width: 100%;
     height: auto;
+}
+#stageContainer canvas{
+    width: 100%;
+    height: auto;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABDAQMAAAD9BCowAAAABlBMVEX////g4OACVBJKAAAAHElEQVQoz2P4DwQNDEAwyqIKCwbqgbwHoyzKWAC2lihk8sAs8QAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+    background-size: 20px auto;
 }

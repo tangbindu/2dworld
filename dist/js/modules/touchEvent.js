@@ -19,6 +19,9 @@ class TouchEvent extends eventTarget{
         this.totalMoveVector=[0,0];//总移动vector
         this.eventType=null;
         this.isMoving=false;
+        //时间
+        this._touchstartTime=null;
+        this._touchendTime=null;
         //初始化
         this.init();
     }
@@ -89,6 +92,7 @@ class TouchEvent extends eventTarget{
     detailMixEvent(type){
         if(type=="touchstart"){
             this.isMoving=true;
+            this._touchstartTime=new Date().getTime();
         }else if(type=="touchmove" && this.isMoving){
             this.moveVector=[
                 this.currentPos.x-this.previousPos.x,
@@ -99,6 +103,10 @@ class TouchEvent extends eventTarget{
                 this.currentPos.y-this.startPos.y
             ];
         }else if( type=="touchend"){
+            this._touchendTime=new Date().getTime();
+            if((this._touchendTime-this._touchstartTime)<200){
+                this.trigger("click")
+            }
             this.isMoving=false;
         }
         this.trigger("mixTouchEvent");

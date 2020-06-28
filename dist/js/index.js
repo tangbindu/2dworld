@@ -7,20 +7,32 @@ import TextSprite from "./modules/sprite_text.js";
 import SpinePlus from "./modules/spinePlus.js";
 import mock from "./mock.js"
 
-//我要创建一个舞台
-let stage=new Stage();
-//我要把我的舞台放在页面厘
-document.getElementById("stageContainer").appendChild(stage.view)
-//设置下舞台大小
-stage.resize(
-    mock.photoTemplate.width,
-    mock.photoTemplate.height
-)
-//设置舞台颜色
-stage.setBackgroundColor("gray")
 
-//背景图片
-let backgroundImage=stage.addImageSprite("../imgs/pattern1.png",{
+
+//step1 新建模版舞台
+let stage=new Stage();
+//step2 舞台放在页面中
+document.getElementById("stageContainer").appendChild(stage.view)
+//step3 选模版-模版0
+let photoTemplate=mock.photoTemplates[0];
+//step4 设置下舞台大小
+stage.resize(
+  photoTemplate.width,
+  photoTemplate.height
+)
+//step5 添加贴纸
+addSticker("ill3")
+//添加角色
+let role=mock.roles[0];
+addRole(role)
+
+
+
+//共有交互逻辑
+/**
+ * 取消操作标识
+*/
+let backgroundImage=stage.addImageSprite("../imgs/opacity.png",{
     width:stage.width,
     height:stage.height,
     zindex:-1,
@@ -30,139 +42,112 @@ backgroundImage.handler("touchstart",()=>{
     controlSprite.unAttach();
     controlSprite.reset();
 })
-/** 
- * 贴纸
-*/
-let stickers=[
-    // "ill3",
-    // "ill4",
-    // "ill5",
-    // "ill6",
-    // "ill7",
-    // "ill8",
-    // "ill9",
-    // "ill9",
-    // "ill9",
-    // "ill10",
-    // "ill11",
-    // "ill12",
-    // "ill13",
-    // "ill14",
-    // "ill15",
-    // "ill16",
-    // "ill17",
-    // "ill18",
-    // "ill27",
-]
-stickers.forEach(image=>{
-    let sprite=stage.addImageSprite("../imgs/sticker/"+image+".png",{
-        name:'sticker',
-        x:stage.width*Math.random(),
-        y:stage.height*.1*Math.random(),
-        useDrag:true,
-        zindex:Math.random()*100,
-        zindex:10000
-    })  
-    sprite.handler("touchstart",()=>{
-        if(sprite.name!="control"){
-            controlSprite.attach(sprite)
-            sprite.zindex=stage.getSpriteByName("sticker").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
-        }
-    })
-    sprite.handler("imgLoaded",function(){
-        sprite.width=sprite.width*.6;
-        sprite.height=sprite.height*.6;
-    })
-})
-
-
+/**
+ * 添加贴纸
+ */
+function addSticker(stickerName){
+  let sprite=stage.addImageSprite("../imgs/sticker/"+stickerName+".png",{
+      name:'sticker',
+      x:stage.width*Math.random(),
+      y:stage.height*.1*Math.random(),
+      useDrag:true,
+      zindex:Math.random()*100,
+      zindex:10000
+  })  
+  sprite.handler("touchstart",()=>{
+      if(sprite.name!="control"){
+          controlSprite.attach(sprite)
+          sprite.zindex=stage.getSpriteByName("sticker").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
+      }
+  })
+  sprite.handler("imgLoaded",function(){
+      sprite.width=sprite.width*.6;
+      sprite.height=sprite.height*.6;
+  })
+}
 
 /** 
- * 角色
+ * 添加角色
 */
-let roles=[
-    "role1",
-    "role8",
-    "role2",
-    "role6",
-    "role3",
-    "role4",
-    "role5",
-    "role7",
-]
-let rolesName=[
-    "Fate-Soul",
-    "半俗不雅 ヽ",
-    "我忘不掉你！",
-    "妹妹，哥哥保护你 哥哥，妹妹守护你"
-];
-roles.forEach((rolePath,index)=>{
-    //角色
-    let role=stage.addImageSprite("../imgs/role/"+rolePath+".png",{
-        name:"role",
-        x:stage.width/roles.length*index,
-        y:stage.height-500,
-        useDrag:true,
-        zindex:500
-    })  
-    role.handler("touchstart",()=>{
-        controlSprite.attach(role)
-        //设置层级
-        role.zindex=stage.getSpriteByName("role").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
-    })
-    //铭牌
-    stage.ctx.font = 20+'px palatino';
-    let bandWidth=stage.ctx.measureText(rolesName[index]).width+40;
-    let namebrand=new RoundRectSprite(
-        {
-            radius:20,
-            height:40,
-            width:bandWidth,
-            relativePosition:[.5,0],
-            zindex:100001
-        }
-    );
-    namebrand.parent=role;
-    let nametext=new TextSprite(rolesName[index],{
-        name:"studentName",
-        height:40,
-        width:bandWidth,
-        textAlign:"start",//left right center
-        fontSize:20,
-        relativePosition:[.5,0,20,25],
-        zindex:100002
-    });
-    nametext.parent=role;
-    role.handler("remove",function(){
-        stage.removeSprite(namebrand)
-        stage.removeSprite(nametext)
-    })
-    stage.addSprite(namebrand)
-    stage.addSprite(nametext)
-    //重写点击区
-    role.isInPath=function(ctx,pos) {
-        ctx.save();
-        if(this.rotate){
-            ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
-            ctx.rotate(this.rotate);
-            ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
-        }
-        ctx.beginPath();
-        ctx.rect(
-            this.x+(this.width-200)/2,
-            this.y,
-            200,
-            this.height
-        );
-        ctx.closePath();
-        ctx.restore();
-        if(ctx.isPointInPath(pos.x, pos.y)){
-            return true;
-        }else{
-            return false
-        }
-    }
-})
+function addRole(roleData){
+  //装扮列表
+  let dressList=roleData.dressList;
+  //获取装扮
+
+}
+
+addRoleSprite("../imgs/role/role1.png","半俗不雅",300,stage.height-500);
+
+/**
+ * 添加角色精灵图片
+ */
+function addRoleSprite(imgData,roleName,x,y){
+  //角色
+  let role=stage.addImageSprite(imgData,{
+    name:"role",
+    x:x,
+    y:y,
+    useDrag:true,
+    zindex:500
+  })  
+  role.handler("touchstart",()=>{
+    controlSprite.attach(role)
+    //设置层级
+    role.zindex=stage.getSpriteByName("role").sort((a,b)=>{return b.zindex-a.zindex})[0].zindex+1;
+  })
+  //铭牌
+  stage.ctx.font = 18+'px PingFangSC-Regular';
+  let bandWidth=stage.ctx.measureText(roleName).width+40;
+  let namebrand=new RoundRectSprite(
+      {
+          radius:18,
+          height:36,
+          width:bandWidth,
+          relativePosition:[.5,0],
+          zindex:100001
+      }
+  );
+  namebrand.parent=role;
+  let nametext=new TextSprite(roleName,{
+      name:"studentName",
+      height:40,
+      width:bandWidth,
+      textAlign:"start",//left right center
+      fontSize:18,
+      relativePosition:[.5,0,20,27],
+      zindex:100002
+  });
+  nametext.parent=role;
+  role.handler("remove",function(){
+      stage.removeSprite(namebrand)
+      stage.removeSprite(nametext)
+  })
+  stage.addSprite(namebrand)
+  stage.addSprite(nametext)
+  //重写点击区
+  role.isInPath=function(ctx,pos) {
+      ctx.save();
+      if(this.rotate){
+          ctx.translate(this._rotationOriginPositon[0], this._rotationOriginPositon[1]);
+          ctx.rotate(this.rotate);
+          ctx.translate(-this._rotationOriginPositon[0], -this._rotationOriginPositon[1]);
+      }
+      ctx.beginPath();
+      ctx.rect(
+          this.x+(this.width-200)/2,
+          this.y,
+          200,
+          this.height
+      );
+      ctx.closePath();
+      ctx.restore();
+      if(ctx.isPointInPath(pos.x, pos.y)){
+          return true;
+      }else{
+          return false
+      }
+  }
+}
 
 
 

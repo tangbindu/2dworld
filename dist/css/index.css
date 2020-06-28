@@ -76,16 +76,26 @@ a {
 html, body {
   width: 100%;
   height: 100%;
+  background-color: #eff0f6;
 }
 
-/* line 6, ../../src/sass/index.scss */
+/* line 7, ../../src/sass/index.scss */
 #stageContainer {
   width: 100%;
   height: 100%;
 }
 
-/* line 10, ../../src/sass/index.scss */
+/* line 11, ../../src/sass/index.scss */
 #stageContainer canvas {
   width: 100%;
   height: auto;
+}
+
+/* line 15, ../../src/sass/index.scss */
+#stageContainer canvas {
+  width: 100%;
+  height: auto;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAABDAQMAAAD9BCowAAAABlBMVEX////g4OACVBJKAAAAHElEQVQoz2P4DwQNDEAwyqIKCwbqgbwHoyzKWAC2lihk8sAs8QAAAABJRU5ErkJggg==);
+  background-repeat: repeat;
+  background-size: 20px auto;
 }
